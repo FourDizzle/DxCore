@@ -34,17 +34,18 @@
 
 #pragma once
 
-#include "Stream.h"
-#include "IPAddress.h"
+#include <Stream.h>
+#include <IPAddress.h>
 
 class UDP : public Stream {
 
 public:
-  virtual uint8_t begin(uint16_t) =0; // initialize, start listening on specified port. Returns 1 if successful, 0 if there are no sockets available to use
+  virtual uint8_t begin(uint16_t) =0;  // initialize, start listening on specified port. Returns 1 if successful, 0 if there are no sockets available to use
+  virtual uint8_t beginMulticast(IPAddress, uint16_t) { return 0; }  // initialize, start listening on specified multicast IP address and port. Returns 1 if successful, 0 on failure
   virtual void stop() =0;  // Finish with the UDP socket
 
   // Sending UDP packets
-
+  
   // Start building up a packet to send to the remote host specific in ip and port
   // Returns 1 if successful, 0 if there was a problem with the supplied IP address or port
   virtual int beginPacket(IPAddress ip, uint16_t port) =0;
